@@ -1,16 +1,30 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<title>touch to move servos!</title>
-</head>
-<body>
-	<p>okok</p>
-	<button id="up">up</button><br>
-	<button id="left">left</button>
-	<button id="right">right</button><br>
-	<button id="down">down</button>
-	
+
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script type="text/javascript" src="js/script.js"></script>
+	<script src="http://eightmedia.github.com/hammer.js/hammer.js"></script>
+	<script src="http://eightmedia.github.com/hammer.js/jquery.hammer.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+
+
+	<div class="container-narrow">
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="http://youtu.be/jV5oYCsZ1qc">About</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <h3 class="muted">touch to move servos!</h3>
+      </div>
+      <div class="hero-unit" id="touch"></div>
+      
+    </div> <!-- /container -->
 </body>
 </html>

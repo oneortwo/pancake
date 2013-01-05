@@ -2,7 +2,13 @@
 (function() {
 
   $(document).ready(function() {
-    var pan, socket, tilt;
+    var height, left, pan, pan_limit, socket, tilt, tilt_limit, top, width;
+    pan_limit = [0, 180];
+    tilt_limit = [70, 130];
+    width = parseInt($('#touch').width());
+    height = parseInt($('#touch').height());
+    left = parseInt($('#touch').position().left);
+    top = parseInt($('#touch').position().top);
     pan = 90;
     tilt = 90;
     socket = io.connect('192.168.1.67');
@@ -12,32 +18,17 @@
         my: 'data'
       });
     });
-    $('#left').click(function() {
-      pan -= 10;
-      return socket.emit('pan', {
-        value: pan
+    return $("#touch").hammer().bind("tap", function(ev) {
+      var x, y;
+      x = ((ev.position[0].x - left) / width) * (pan_limit[1] - pan_limit[0]) + pan_limit[0];
+      y = ((ev.position[0].y - top) / height) * (tilt_limit[1] - tilt_limit[0]) + tilt_limit[0];
+      console.log("x: " + x + " y: " + y);
+      socket.emit('pan', {
+        value: x
       });
-    });
-    $('#right').click(function() {
-      pan += 10;
-      return socket.emit('pan', {
-        value: pan
-      });
-    });
-    $('#up').click(function() {
-      tilt += 10;
       return socket.emit('tilt', {
-        value: tilt
+        value: y
       });
-    });
-    $('#down').click(function() {
-      tilt -= 10;
-      return socket.emit('tilt', {
-        value: tilt
-      });
-    });
-    return $('button').click(function() {
-      return console.log("sent pan: " + pan + " tilt: " + tilt);
     });
   });
 
