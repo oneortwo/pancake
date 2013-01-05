@@ -2,23 +2,41 @@
 (function() {
 
   $(document).ready(function() {
-    var pan, tilt;
+    var pan, socket, tilt;
     pan = 90;
     tilt = 90;
+    socket = io.connect('192.168.1.67');
+    socket.on('news', function(data) {
+      console.log(data);
+      return socket.emit('my other event', {
+        my: 'data'
+      });
+    });
     $('#left').click(function() {
-      return pan -= 10;
+      pan -= 10;
+      return socket.emit('pan', {
+        value: pan
+      });
     });
     $('#right').click(function() {
-      return pan += 10;
+      pan += 10;
+      return socket.emit('pan', {
+        value: pan
+      });
     });
     $('#up').click(function() {
-      return tilt += 10;
+      tilt += 10;
+      return socket.emit('tilt', {
+        value: tilt
+      });
     });
     $('#down').click(function() {
-      return tilt -= 10;
+      tilt -= 10;
+      return socket.emit('tilt', {
+        value: tilt
+      });
     });
     return $('button').click(function() {
-      $.post('http://localhost:1337?pan=' + pan + '&tilt=' + tilt);
       return console.log("sent pan: " + pan + " tilt: " + tilt);
     });
   });
